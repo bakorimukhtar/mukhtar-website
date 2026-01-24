@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   Menu,
   X,
@@ -56,12 +57,12 @@ export default function Header() {
             <div className="font-semibold tracking-tight">bakoritech</div>
 
             <nav className="hidden md:flex items-center gap-4 text-neutral-500 dark:text-neutral-400">
-              <a
+              <Link
                 href="/"
                 className="hover:text-neutral-900 dark:hover:text-neutral-100"
               >
                 Home
-              </a>
+              </Link>
               <a
                 href="https://www.linkedin.com"
                 className="flex items-center gap-1 hover:text-neutral-900 dark:hover:text-neutral-100"
@@ -172,14 +173,14 @@ export default function Header() {
 
             <div className="px-4 py-4">
               <div className="mb-3 rounded-xl bg-white shadow-sm dark:bg-neutral-900">
-                <a
+                <Link
                   href="/"
                   className="flex w-full items-center justify-between px-4 py-3 text-sm"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <span>Home</span>
                   <span className="text-neutral-400">›</span>
-                </a>
+                </Link>
               </div>
 
               <p className="mb-2 text-center text-xs font-semibold tracking-wide text-neutral-500 dark:text-neutral-400">
@@ -188,7 +189,7 @@ export default function Header() {
 
               <div className="space-y-2">
                 {sections.map((s) => (
-                  <a
+                  <Link
                     key={s.href}
                     href={s.href}
                     className="flex w-full items-center justify-between rounded-xl bg-white px-4 py-3 text-sm shadow-sm dark:bg-neutral-900"
@@ -196,7 +197,7 @@ export default function Header() {
                   >
                     <span>{s.label}</span>
                     <span className="text-neutral-400">›</span>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
