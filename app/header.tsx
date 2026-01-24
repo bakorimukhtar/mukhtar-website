@@ -1,7 +1,7 @@
 // app/header.tsx
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Menu,
   X,
@@ -14,7 +14,6 @@ import {
   Pause,
 } from "lucide-react";
 import { useTheme } from "./theme-provider";
-import { MUSIC_SRC } from "./music-player";
 
 const sections = [
   { href: "/", label: "Introduction" },
@@ -30,10 +29,8 @@ const sections = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [timeString, setTimeString] = useState("");
-  const { dark, toggle } = useTheme();
 
-  const [playing, setPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { dark, toggleTheme, playing, toggleMusic } = useTheme();
 
   useEffect(() => {
     const update = () => {
@@ -48,38 +45,6 @@ export default function Header() {
     update();
     const id = setInterval(update, 30_000);
     return () => clearInterval(id);
-  }, []);
-
-  // initialize audio lazily
-  const handleToggleMusic = () => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio(MUSIC_SRC);
-      audioRef.current.loop = true;
-    }
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (playing) {
-      audio.pause();
-      setPlaying(false);
-    } else {
-      audio
-        .play()
-        .then(() => setPlaying(true))
-        .catch(() => {
-          // autoplay can fail; keep state off
-          setPlaying(false);
-        });
-    }
-  };
-
-  // stop music if header unmounts
-  useEffect(() => {
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
-    };
   }, []);
 
   return (
@@ -139,10 +104,10 @@ export default function Header() {
               <span>{timeString}</span>
             </div>
 
-            {/* music toggle */}
+            {/* music toggle (global) */}
             <button
               type="button"
-              onClick={handleToggleMusic}
+              onClick={toggleMusic}
               className={`flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-neutral-100 hover:bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800 ${
                 playing ? "text-violet-600 dark:text-violet-400" : ""
               }`}
@@ -150,10 +115,10 @@ export default function Header() {
               {playing ? <Pause className="h-4 w-4" /> : <Music className="h-4 w-4" />}
             </button>
 
-            {/* theme toggle */}
+            {/* theme toggle (global) */}
             <button
               type="button"
-              onClick={toggle}
+              onClick={toggleTheme}
               className="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-neutral-100 hover:bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800"
             >
               {dark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}

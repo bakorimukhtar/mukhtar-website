@@ -5,21 +5,28 @@ import {
   createContext,
   useContext,
   useEffect,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
 
 type ThemeContextValue = {
   dark: boolean;
-  toggle: () => void;
+  toggleTheme: () => void;
+  playing: boolean;
+  toggleMusic: () => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
+const MUSIC_SRC = "/music/track.mp3";
+
 export default function ThemeProvider({ children }: { children: ReactNode }) {
   const [dark, setDark] = useState(true);
+  const [playing, setPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // default based on time: dark from 6pm–7am
+  // default theme based on time: dark from 6pm–7am
   useEffect(() => {
     const hour = new Date().getHours();
     const defaultDark = hour >= 18 || hour < 7;
@@ -38,7 +45,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // apply to <html> and persist
+  // apply theme to <html> and persist
   useEffect(() => {
     const root = document.documentElement;
     if (dark) root.classList.add("dark");
@@ -51,11 +58,42 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, [dark]);
 
+  // global music toggle
+  const toggleMusic = () => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio(MUSIC_SRC);
+      audioRef.current.loop = true;
+    }
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (playing) {
+      audio.pause();
+      setPlaying(false);
+    } else {
+      audio
+        .play()
+        .then(() => setPlaying(true))
+        .catch(() => setPlaying(false));
+    }
+  };
+
+  // stop music if provider ever unmounts
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, []);
+
   return (
     <ThemeContext.Provider
       value={{
         dark,
-        toggle: () => setDark((v) => !v),
+        toggleTheme: () => setDark((v) => !v),
+        playing,
+        toggleMusic,
       }}
     >
       {children}
