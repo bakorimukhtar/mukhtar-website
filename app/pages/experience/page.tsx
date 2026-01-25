@@ -1,17 +1,7 @@
 // app/pages/experience/page.tsx
 import Link from "next/link";
 import SectionsLayout from "@/app/sections-layout";
-import {
-  Briefcase,
-  Award,
-  Sparkles,
-  CheckCircle2,
-  ArrowUpRight,
-  Building2,
-  Linkedin,
-  Music2,
-  Code2,
-} from "lucide-react";
+import { Briefcase, Award, Sparkles, CheckCircle2, ArrowUpRight } from "lucide-react";
 
 type Role = {
   title: string;
@@ -26,7 +16,7 @@ type Cert = {
   issuer: string;
   year: string;
   href?: string;
-  logoSrc: string; // from /public
+  logoSrc: string;
 };
 
 const roles: Role[] = [
@@ -133,7 +123,7 @@ function SectionCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
+    <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm sm:p-5 dark:border-neutral-800 dark:bg-neutral-900">
       <div className="flex items-center gap-2">
         <span className="grid h-9 w-9 place-items-center rounded-xl border border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-950">
           <Icon className="h-4 w-4 text-neutral-800 dark:text-neutral-100" />
@@ -150,14 +140,15 @@ function SectionCard({
 export default function ExperiencePage() {
   return (
     <SectionsLayout>
-      <div className="w-full max-w-6xl">
+      {/* Add padding + center container for mobile */}
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
         {/* HERO */}
         <section className="w-full max-w-3xl">
           <p className="text-xs font-medium uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
             Experience &amp; background
           </p>
 
-          <h1 className="mt-2 text-3xl md:text-4xl font-semibold text-neutral-900 dark:text-neutral-50">
+          <h1 className="mt-2 text-2xl font-semibold text-neutral-900 sm:text-3xl md:text-4xl dark:text-neutral-50">
             Founder work, internships,{" "}
             <span className="bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent">
               and leadership
@@ -165,13 +156,13 @@ export default function ExperiencePage() {
             .
           </h1>
 
-          <p className="mt-3 text-sm md:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+          <p className="mt-3 text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
             A practical overview of roles I’ve held, what I delivered, and the kind of environments I work best in.
           </p>
         </section>
 
         {/* GRID */}
-        <section className="mt-10 grid gap-8 lg:grid-cols-2">
+        <section className="mt-8 grid gap-8 lg:grid-cols-2">
           {/* LEFT: ROLES TIMELINE */}
           <div>
             <div className="flex items-center gap-2">
@@ -181,23 +172,31 @@ export default function ExperiencePage() {
               </h2>
             </div>
 
-            <div className="relative mt-5 border-l border-neutral-200 pl-6 dark:border-neutral-800">
+            {/* Smaller padding on mobile so it doesn't feel squeezed */}
+            <div className="relative mt-5 border-l border-neutral-200 pl-4 sm:pl-6 dark:border-neutral-800">
               {roles.map((r) => (
-                <div key={`${r.title}-${r.meta}`} className="relative pb-8">
-                  <span className="absolute -left-[9px] top-6 h-4 w-4 rounded-full border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900" />
+                <div key={`${r.title}-${r.meta}`} className="relative pb-6 sm:pb-8">
+                  {/* Marker position tuned per breakpoint */}
+                  <span className="absolute -left-[7px] sm:-left-[9px] top-6 h-4 w-4 rounded-full border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900" />
 
-                  <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
+                  <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm sm:p-5 dark:border-neutral-800 dark:bg-neutral-900">
                     <div className="space-y-1">
-                      <h3 className="text-base font-semibold text-neutral-900 dark:text-neutral-50">
+                      <h3 className="text-base font-semibold text-neutral-900 dark:text-neutral-50 break-words">
                         {r.title}
                       </h3>
-                      <p className="text-sm text-neutral-700 dark:text-neutral-200">{r.org}</p>
-                      <p className="text-xs text-neutral-500 dark:text-neutral-400">{r.meta}</p>
+                      <p className="text-sm text-neutral-700 dark:text-neutral-200 break-words">
+                        {r.org}
+                      </p>
+                      <p className="text-xs text-neutral-500 dark:text-neutral-400 break-words">
+                        {r.meta}
+                      </p>
                     </div>
 
-                    <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-neutral-600 dark:text-neutral-300">
+                    <ul className="mt-4 list-disc space-y-2 pl-4 sm:pl-5 text-sm text-neutral-600 dark:text-neutral-300">
                       {r.bullets.map((b) => (
-                        <li key={b}>{b}</li>
+                        <li key={b} className="break-words">
+                          {b}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -206,7 +205,7 @@ export default function ExperiencePage() {
             </div>
           </div>
 
-          {/* RIGHT: CARDS (Education removed) */}
+          {/* RIGHT: CARDS */}
           <div className="space-y-5">
             <SectionCard icon={Sparkles} title="How I work">
               <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-600 dark:text-neutral-300">
@@ -232,8 +231,9 @@ export default function ExperiencePage() {
                     key={c.id}
                     className="rounded-2xl border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-950"
                   >
-                    <div className="flex items-start gap-3">
-                      <div className="h-10 w-10 overflow-hidden rounded-xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900">
+                    {/* min-w-0 prevents flex children from forcing overflow on small screens */}
+                    <div className="flex items-start gap-3 min-w-0">
+                      <div className="h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900">
                         <img
                           src={c.logoSrc}
                           alt={c.issuer}
@@ -243,10 +243,10 @@ export default function ExperiencePage() {
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-semibold text-neutral-900 dark:text-neutral-50">
+                        <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-50 break-words">
                           {c.name}
                         </p>
-                        <p className="text-xs text-neutral-600 dark:text-neutral-400">
+                        <p className="mt-0.5 text-xs text-neutral-600 dark:text-neutral-400 break-words">
                           {c.issuer} • {c.year}
                         </p>
                       </div>
@@ -258,12 +258,12 @@ export default function ExperiencePage() {
                           href={c.href}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-2 rounded-xl bg-violet-600 px-3 py-2 text-xs font-semibold text-white hover:bg-violet-500"
+                          className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-violet-600 px-3 py-2 text-xs font-semibold text-white hover:bg-violet-500"
                         >
                           Verify credential <ArrowUpRight className="h-4 w-4" />
                         </a>
                       ) : (
-                        <span className="inline-flex items-center gap-2 rounded-xl bg-neutral-100 px-3 py-2 text-xs font-semibold text-neutral-400 dark:bg-neutral-900 dark:text-neutral-600">
+                        <span className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-neutral-100 px-3 py-2 text-xs font-semibold text-neutral-400 dark:bg-neutral-900 dark:text-neutral-600">
                           Verification unavailable <ArrowUpRight className="h-4 w-4" />
                         </span>
                       )}
