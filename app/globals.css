@@ -123,3 +123,47 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Contact rotating words (release/product/project/app) */
+.contact-rotating-words {
+  position: relative;
+  display: inline-block;
+  height: 1.2em;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.contact-rotating-words span {
+  display: block;
+  height: 1.2em;
+  animation: contact-rotate 8s infinite;
+}
+
+@keyframes contact-rotate {
+  0% { transform: translateY(0%); }
+  23% { transform: translateY(0%); }
+  25% { transform: translateY(-100%); }
+  48% { transform: translateY(-100%); }
+  50% { transform: translateY(-200%); }
+  73% { transform: translateY(-200%); }
+  75% { transform: translateY(-300%); }
+  98% { transform: translateY(-300%); }
+  100% { transform: translateY(0%); }
+}
+
+/* Little pulse dot */
+.contact-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: rgb(124 58 237); /* violet-600-ish */
+  box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.55);
+  animation: contact-pulse 1.6s infinite;
+}
+
+@keyframes contact-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.55); }
+  70% { box-shadow: 0 0 0 10px rgba(124, 58, 237, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+}
+

@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 
 import Header from "./header";
 import ThemeProvider from "./theme-provider";
+import Footer from "./footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,8 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <Header />
-          <main className="min-h-[calc(100vh-3.5rem)]">{children}</main>
+          <main className="min-h-[calc(100vh-3.5rem-3rem)]">{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
