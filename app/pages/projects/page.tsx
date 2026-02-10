@@ -113,7 +113,7 @@ const solutions: Project[] = [
   },
   {
     id: "car-dealership",
-    title: "Car Dealership Management System",
+    title: "Automobile Dealership Management System",
     category: "Solution",
     summary:
       "A dealership workflow system for vehicle listings, buyers, installment tracking, documentation, and internal reporting.",
