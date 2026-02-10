@@ -20,7 +20,7 @@ export default function AboutPage() {
           <p>
             My work centers on turning real business needs into products that feel natural to use.
             I&apos;m currently building and growing startups like <span className="font-medium">Rijxa</span> and{" "}
-            <span className="font-medium">YAWO</span>—event and mobility platforms focused on how people
+            <span className="font-medium">YAWO</span> event and mobility platforms focused on how people
             move, gather, and experience services in their cities. Alongside these products, I take on
             projects that streamline processes for schools, small businesses, and organizations that
             want technology to work for them, not against them.
