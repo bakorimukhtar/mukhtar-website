@@ -56,6 +56,9 @@ const clients: Client[] = [
 ];
 
 export default function ClientsPage() {
+  // Filter out Legit Empire temporarily
+  const visibleClients = clients.filter((c) => c.id !== "legit-empire");
+
   return (
     <SectionsLayout>
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
@@ -74,13 +77,12 @@ export default function ClientsPage() {
         </section>
 
         <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {clients.map((c) => (
+          {visibleClients.map((c) => (
             <article
               key={c.id}
               className="group rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition-transform duration-200 hover:-translate-y-0.5 dark:border-neutral-800 dark:bg-neutral-900"
             >
               <header className="flex items-start gap-4">
-                {/* Bigger + visible logo container */}
                 <div className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-white">
                   <img
                     src={c.logoSrc}
